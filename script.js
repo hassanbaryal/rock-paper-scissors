@@ -1,5 +1,3 @@
-console.log("Are we there yet")
-
 //Function randomly selects either rock, paper or scissor for computer
 function computerPlay(playerSelection, computerSelection) {
     const options = ['rock', 'paper', 'scissor'];
@@ -53,11 +51,15 @@ function game() {
         computerSelection = computerPlay();
         //determines winner
         didPlayerWin = playRound(playerSelection, computerSelection);
+
         //adds to win counter
+        //if the round is a tie, then it redoes the round by subtracting from counter i
         if (didPlayerWin) {
             playerWins++;
-        } else {
+        } else if (didPlayerWin == false){
             computerWins++;
+        } else {
+            i--;
         }
 
         console.log(`Player: ${playerWins}    Computer: ${computerWins}`);
@@ -69,16 +71,16 @@ function game() {
             console.log('Computer has won. game over. *FIREWORKS BUT IN ROBOT*')
             break;
         }
+        playerSelection = '';
     }
 
     //Asks if player wants to play again
     while (true) {
         playAgain = prompt('Play again? Yes or no.').toLowerCase();
-        if (playAgain = 'yes') {
+        if (playAgain == 'yes') {
             game();
             break;
-        } else if (playAgain = 'no') {
-            game();
+        } else if (playAgain =='no') {
             break;
         } else {
             alert('Input a valid option.');
