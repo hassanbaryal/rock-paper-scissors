@@ -1,0 +1,12 @@
+
+body {
+    height: 100%;
+    background-color: antiquewhite;
+    display: flex;
+    flex-flow: column;
+}
+
+#top-container, #bottom-container {
+    display: flex;
+    
+}
