@@ -1,4 +1,8 @@
 
+html, body {
+    margin: 0;
+    height: 100%;
+}
 body {
     height: 100%;
     background-color: antiquewhite;
@@ -6,7 +10,42 @@ body {
     flex-flow: column;
 }
 
-#top-container, #bottom-container {
+
+#heading, #top-container, #bottom-container {
     display: flex;
+
+}
+
+#heading {
+    height: 150px;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#top-container {
+    flex-flow: row nowrap;
+    height: auto;
+    justify-content: center;
+    gap: 250px;
+    align-items: center;
+}
+
+#bottom-container {
+    height: ;
+    flex-flow: column;
     
+}
+
+.player-stat, .computer-stat {
+    border: 2px solid black;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    
+}
+
+img {
+    max-height: 300px;
+
 }
