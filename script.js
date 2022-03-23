@@ -140,7 +140,6 @@ function createBtns (state) {
 function game() {
     instructionTxt.textContent = `Choose your Champion:`
     createBtns(1)
-    return
 }
 
 const playBtn = document.querySelector(".play")
