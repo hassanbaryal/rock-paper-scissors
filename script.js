@@ -1,93 +1,118 @@
+
+let computerScore = 0
+let playerScore = 0
+
+
+const instructionTxt = document.querySelector(".instruction")
+const playerScoreTxt = document.querySelector(".player-stat").querySelector(".score")
+const computerScoreTxt = document.querySelector(".computer-stat").querySelector(".score")
+
 //Function randomly selects either rock, paper or scissor for computer
-function computerPlay(playerSelection, computerSelection) {
+function computerPlay() {
     const options = ['rock', 'paper', 'scissor'];
     return options[Math.floor(Math.random() * 3)];
 }
 
-//Determines winner of a rock paper scissor round based on the parameters, player selection & computer selection
-function playRound(playerSelection, computerSelection) {
+//Determines winner of a rock paper scissor round/game 
+function playRound(playerSelection) {
     
-    let winCondition = false;
+    let playerWin = false;
+    computerSelection = computerPlay()
 
     if (playerSelection == computerSelection) { //for ties
         console.log(`Its a tie! You both chose ${playerSelection}.`);
+        instructionTxt.textContent = `Its a tie! You both chose ${playerSelection}.`
         return;
     //This else if accounts for all scenarios for which the player can win
     } else if ( (playerSelection == 'rock' && computerSelection == 'scissor') ||
     (playerSelection == 'paper' && computerSelection == 'rock') ||
     (playerSelection == 'scissor' && computerSelection == 'paper')) {
-        winCondition = true;
+        playerWin = true;
     }
 
-    if (winCondition) {
+    if (playerWin) {
         console.log(`Woah, ${playerSelection} beats ${computerSelection}. You won this round!!`);
+        instructionTxt.textContent = `Woah, ${playerSelection} beats ${computerSelection}. You won this round!!`
+        playerScore++
     } else {
         console.log(`Damn, ${playerSelection} loses to ${computerSelection}. You lost this round.`)
+        instructionTxt.textContent = `Damn, ${playerSelection} loses to ${computerSelection}. You lost this round.`
+        computerScore++
     }
 
-    return winCondition;
+    updateStats()
+
+    if (playerScore == 5) {
+        instructionTxt.textContent = `Wow, you won!! Congratulations!! Proceed to The White House to claim your prize, or play again to show your dominance once more.`
+        createBtns(2)
+    } else if (computerScore == 5) {
+        instructionTxt.textContent = `You lost :(. There's still hope, would you like to play again?`
+        createBtns(2)
+    }
 }
 
+
+function updateStats () {
+    playerScoreTxt.textContent = `Score: ${playerScore}`
+    computerScoreTxt.textContent = `Score: ${computerScore}`    
+}
+
+
+//Creates buttons for rps depending on the stae of the game.
+// stae=1 means the game is underway. state=2 means the game is done,
+//and the play again option should be presented.
+//state=0 is what is seen upon loading the page.
+function createBtns (state) {
+    //remove all present buttons
+    const container = document.querySelector("#bottom-container")
+    const btns = document.querySelectorAll(".btn")
+    btns.forEach(btn => {
+        btn.remove()
+    })
+    //state 1 adds the rock, paper, and scissors buttons
+    //state 2 adds the play again options
+    if (state == 1) {
+
+        const rockBtn = document.createElement("button")
+        const paperBtn = document.createElement("button")
+        const scissorBtn = document.createElement("button")
+
+        rockBtn.classList.add("btn", "rock")
+        paperBtn.classList.add("btn", "paper")
+        scissorBtn.classList.add("btn", "scissor")
+
+        rockBtn.textContent = "Rock"
+        paperBtn.textContent = "Paper"
+        scissorBtn.textContent = "Scissor"
+
+        container.appendChild(rockBtn)
+        container.appendChild(paperBtn)
+        container.appendChild(scissorBtn)
+        
+        rockBtn.addEventListener('click', () => {playRound('rock')})
+        paperBtn.addEventListener('click', () => {playRound('paper')})
+        scissorBtn.addEventListener('click', () => {playRound('scissor')})
+    } else if (state == 2) {
+        const playAgainBtn = document.createElement("button")
+        playAgainBtn.classList.add("btn", "play-again")
+        playAgainBtn.textContent = "Play Again?"
+        container.appendChild(playAgainBtn)
+        playAgainBtn.addEventListener('click', () => {
+            computerScore = 0
+            playerScore = 0
+            updateStats()
+            game()
+        })
+    }
+}
 
 //This function commences the game of rock paper scissors.
 function game() {
-    let playerSelection; //players selection
-    let computerSelection; //computers select
-    let didPlayerWin; //boolean which is assinged true if the player wins the round
-    let playerWins = 0; //Number of rounds player has won
-    let computerWins = 0; //Number of rounds computer has won
-    let playAgain; 
-
-    alert('Rock, paper, scissor against the computer! This is a best of 5.')
-
-    //For loop that plays through each of the 5 rounds
-    for (let i = 1; i < 6; i++){
-        console.log(`Commencing Round ${i}!`);
-        //keeps looping until player selects a valid option (i.e. either rock, paper, or scissors)
-        while (playerSelection != 'rock' && playerSelection != 'paper' && playerSelection != 'scissor') {
-            playerSelection = (prompt('Please select your champion! (Rock, paper, or scissor)')).toLowerCase();
-        }
-        //gets computers selection
-        computerSelection = computerPlay();
-        //determines winner
-        didPlayerWin = playRound(playerSelection, computerSelection);
-
-        //adds to win counter
-        //if the round is a tie, then it redoes the round by subtracting from counter i
-        if (didPlayerWin) {
-            playerWins++;
-        } else if (didPlayerWin == false){
-            computerWins++;
-        } else {
-            i--;
-        }
-
-        console.log(`Player: ${playerWins}    Computer: ${computerWins}`);
-        //ends game/for loop if either player or computer reaches 3 wins (bst of 5) 
-        if (playerWins == 3) {
-            console.log('You have won this game! *FIREWORKS*');
-            break;
-        } else if (computerWins == 3) {
-            console.log('Computer has won. game over. *FIREWORKS BUT IN ROBOT*')
-            break;
-        }
-        playerSelection = '';
-    }
-
-    //Asks if player wants to play again
-    while (true) {
-        playAgain = prompt('Play again? Yes or no.').toLowerCase();
-        if (playAgain == 'yes') {
-            game();
-            break;
-        } else if (playAgain =='no') {
-            break;
-        } else {
-            alert('Input a valid option.');
-        }
-    }
-
-    return;
+    instructionTxt.textContent = `Choose your Champion:`
+    createBtns(1)
+    return
 }
 
-//game();
+const playBtn = document.querySelector(".play")
+
+playBtn.addEventListener('click', game)
