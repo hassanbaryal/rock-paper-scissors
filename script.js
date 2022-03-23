@@ -7,17 +7,22 @@ const instructionTxt = document.querySelector(".instruction")
 const playerScoreTxt = document.querySelector(".player-stat").querySelector(".score")
 const computerScoreTxt = document.querySelector(".computer-stat").querySelector(".score")
 
+const playerImg = document.querySelector(".player-stat").querySelector(".champion")
+const computerImg =  document.querySelector(".computer-stat").querySelector(".champion")
+
 //Function randomly selects either rock, paper or scissor for computer
 function computerPlay() {
     const options = ['rock', 'paper', 'scissor'];
     return options[Math.floor(Math.random() * 3)];
 }
 
+
 //Determines winner of a rock paper scissor round/game 
 function playRound(playerSelection) {
     
     let playerWin = false;
     computerSelection = computerPlay()
+    updateImages(playerSelection, computerSelection)
 
     if (playerSelection == computerSelection) { //for ties
         console.log(`Its a tie! You both chose ${playerSelection}.`);
@@ -40,17 +45,42 @@ function playRound(playerSelection) {
         computerScore++
     }
 
+    
     updateStats()
 
     if (playerScore == 5) {
         instructionTxt.textContent = `Wow, you won!! Congratulations!! Proceed to The White House to claim your prize, or play again to show your dominance once more.`
+        playerImg.src = './images/player.png'
+        computerImg.src = './images/computer-sad.png'
         createBtns(2)
     } else if (computerScore == 5) {
         instructionTxt.textContent = `You lost :(. There's still hope, would you like to play again?`
+        playerImg.src = './images/player-sad.png'
+        computerImg.src = './images/computer-happy.png'
         createBtns(2)
     }
 }
 
+//updates images of player and computer
+function updateImages (playerSelection, computerSelection) {
+    if (playerSelection == 'rock') {
+        playerImg.src = './images/rock.png'
+    } else if (playerSelection == 'paper') {
+        playerImg.src = './images/paper.png'
+    } else {
+        playerImg.src = './images/scissor.png'
+    }
+
+    if (computerSelection == 'rock') {
+        computerImg.src = './images/rock.png'
+    } else if (computerSelection == 'paper') {
+        computerImg.src = './images/paper.png'
+    } else {
+        computerImg.src = './images/scissor.png'
+    }
+
+
+}
 
 function updateStats () {
     playerScoreTxt.textContent = `Score: ${playerScore}`
