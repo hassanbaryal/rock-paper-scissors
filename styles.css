@@ -2,10 +2,11 @@
 html, body {
     margin: 0;
     height: 100%;
+    font-family: 'Courier New', Courier, monospace
 }
 body {
     height: 100%;
-    background-color: antiquewhite;
+    background-color: burlywood;
     display: flex;
     flex-flow: column;
 }
@@ -13,7 +14,6 @@ body {
 
 #heading, #top-container, #bottom-container {
     display: flex;
-
 }
 
 #heading {
@@ -21,9 +21,13 @@ body {
     flex-flow: row;
     justify-content: center;
     align-items: center;
+    font-size: 40px;
+    font-weight: bolder;
+    gap: 25px;
 }
 
 #top-container {
+    margin: 50px;
     flex-flow: row nowrap;
     height: auto;
     justify-content: center;
@@ -32,8 +36,11 @@ body {
 }
 
 #bottom-container {
-    height: ;
+    margin: 50px;
     flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     
 }
 
@@ -46,6 +53,17 @@ body {
 }
 
 img {
-    max-height: 300px;
+    max-height: 200px;
 
+}
+
+.champion {
+    max-height: 300px;
+}
+
+button {
+    width: 150px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    padding: 6px 6px;
 }
